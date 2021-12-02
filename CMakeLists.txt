@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.20)
+project(zs_sender)
+
+set(CMAKE_CXX_STANDARD 14)
+
+set(WINPCAP_INCLUDE_DIR D:/WpdPack/Include)
+set(WINPCAP_LIBRARIES D:/WpdPack/Lib/x64)
+
+include_directories(${WINPCAP_INCLUDE_DIR})
+link_directories(${WINPCAP_LIBRARIES})
+
+add_subdirectory(common)
+add_subdirectory(data-link-layer)
+
+# message(STATUS Packet wpcap)
+add_executable(zs_sender main.cpp)
+
+target_link_libraries(zs_sender Packet wpcap)
