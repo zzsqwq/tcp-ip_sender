@@ -6,7 +6,7 @@
 
 //std::mutex tex_;
 
-DataLinkLayer::DataLinkLayer(const uint8_t *src_mac, const uint8_t *dst_mac) {
+DataLinkLayer::DataLinkLayer(uint8_t *src_mac, uint8_t *dst_mac) {
     for (int i = 0; i < 6; i++) this->src_mac_[i] = src_mac[i];
     for (int i = 0; i < 6; i++) this->dst_mac_[i] = dst_mac[i];
 
@@ -20,7 +20,7 @@ DataLinkLayer::DataLinkLayer(const uint8_t *src_mac, const uint8_t *dst_mac) {
     for (pcap_if_t *d = alldevs_; d; d = d->next) {
         printf("%d. %s", ++drive_nums_, d->name);
         if (d->description)
-            printf(" kkk(%s)\n", d->description);
+            printf(" (%s)\n", d->description);
         else
             printf(" (No description available)\n");
     }
@@ -41,9 +41,11 @@ DataLinkLayer::DataLinkLayer(const uint8_t *src_mac, const uint8_t *dst_mac) {
 
     /* Jump to the selected adapter */
     //int i = drive_selected_;
-    pcap_if_t *dev = alldevs_ + drive_selected_;
+    //pcap_if_t *dev = alldevs_ + drive_selected_ - 1;
     //for(int i=0;i<)
-    //for (p = alldevs, temp_int = 0;  < drive_selected_ - 1; temp_drive = temp_drive->next, temp_pointer++);
+    int i= 0;
+    pcap_if_t* dev;
+    for (dev = alldevs_, i = 0;  i < drive_selected_ - 1; dev = dev->next, i++);
 
     /* Open the adapter */
     if ((dev_handle_ = pcap_open_live(dev->name, // name of the device

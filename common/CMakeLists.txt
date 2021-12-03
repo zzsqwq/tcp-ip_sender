@@ -4,7 +4,7 @@ project(common)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_library(sender_toolbox SHARED common.hpp)
+add_library(sender_toolbox INTERFACE common.hpp)
 
 set_target_properties(sender_toolbox PROPERTIES LINKER_LANGUAGE CXX)
 

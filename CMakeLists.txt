@@ -19,4 +19,4 @@ add_subdirectory(data-link-layer)
 # message(STATUS Packet wpcap)
 add_executable(zs_sender main.cpp)
 
-target_link_libraries(zs_sender Packet wpcap)
+target_link_libraries(zs_sender DataLinkLayer Packet wpcap)

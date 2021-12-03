@@ -4,10 +4,10 @@
 
 #ifndef ZS_SENDER_DATALINKLAYER_H
 #define ZS_SENDER_DATALINKLAYER_H
-
-// winpcap
-#include<pcap.h>
+#define HAVE_REMOTE
 // c++ header
+#include<stdio.h>
+#include<stdlib.h>
 #include<cstring>
 #include<cmath>
 #include<iostream>
@@ -16,14 +16,13 @@
 #include<stack>
 #include<mutex>
 #include<thread>
-//#include<cstdio>
-//#include<cstdlib>
 #include<unistd.h>
 #include<direct.h>
 // common
 #include<macro.h>
 
-#define HAVE_REMOTE
+// winpcap
+#include<pcap.h>
 
 //ethernet header
 struct ethernet_header {
@@ -41,11 +40,11 @@ struct ethernet_packet {
 class DataLinkLayer {
 public:
 
-    DataLinkLayer(const uint8_t *src_mac, const uint8_t *dst_mac);
+    DataLinkLayer(uint8_t *src_mac, uint8_t *dst_mac);
 
     void generate_packet();
 
-    void data_loader(const uint8_t *data_to_send);
+    void data_loader(const uint8_t *data_to_send = nullptr);
 
     void send_packet();
 
@@ -72,8 +71,8 @@ private:
     std::queue<ethernet_packet> send_queue_;
     std::mutex *tex_ = new std::mutex();
     char error_buffer_[PCAP_ERRBUF_SIZE];
-    int drive_nums_;
-    int drive_selected_;
+    int drive_nums_{0};
+    int drive_selected_ = 0;
 
 
 };

@@ -1,18 +1,15 @@
 
-//#include "DataLinkLayer.h"
+#include "DataLinkLayer.h"
 
-//const u_int8_t dst_mac[6] = {0xA0, 0xE7, 0x0B, 0xAE, 0x45, 0x1B};
-//const u_int8_t src_mac[6] = {0xA0, 0xE7, 0x0B, 0xAE, 0x45, 0x1B};
-
-#include<pcap.h>
-#include<stdio.h>
+uint8_t dst_mac[6] = {0xA0, 0xE7, 0x0B, 0xAE, 0x45, 0x1B};
+uint8_t src_mac[6] = {0xA0, 0xE7, 0x0B, 0xAE, 0x45, 0x1B};
 
 int main() {
 
-    //DataLinkLayer data_link(src_mac, dst_mac);
+    DataLinkLayer data_link(src_mac, dst_mac);
+    data_link.data_loader();
 
-
-    //data_link.run();
+    data_link.run();
 
     return 0;
 
