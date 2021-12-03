@@ -16,8 +16,8 @@
 #include<stack>
 #include<mutex>
 #include<thread>
-#include<cstdio>
-#include<cstdlib>
+//#include<cstdio>
+//#include<cstdlib>
 #include<unistd.h>
 #include<direct.h>
 // common
@@ -40,26 +40,42 @@ struct ethernet_packet {
 
 class DataLinkLayer {
 public:
+
+    DataLinkLayer(const uint8_t *src_mac, const uint8_t *dst_mac);
+
     void generate_packet();
 
-    void send_packet(pcap_t *adhandle);
+    void data_loader(const uint8_t *data_to_send);
+
+    void send_packet();
 
     void load_ethernet_header(u_int8_t *buffer);
 
-    int load_ethernet_data(u_int8_t *buffer, FILE *fp);
+    int load_ethernet_data(u_int8_t *buffer);
 
-    int second_load_data(u_int8_t *buffer, u_int8_t *filebuffer);
+    void run();
+
+    ~DataLinkLayer() = default;
 
 private:
-    pcap_t *adhandle;
-    pcap_if_t *alldevs;
-    u_int8_t dst_mac[6] = {0xA0, 0xE7, 0x0B, 0xAE, 0x45, 0x1B};
-    u_int8_t src_mac[6] = {0xA0, 0xE7, 0x0B, 0xAE, 0x45, 0x1B};
-    bool if_send_end = false;
-    std::queue<ethernet_packet> send_queue;
-    std::mutex tex;
+    pcap_t *dev_handle_;
+    pcap_if_t *alldevs_;
+    uint8_t *data_;
+    uint8_t packet_data_[PACKET_DATA_MAX_SIZE];
+    uint8_t data_length_;
+    uint8_t data_pointer_;
+    u_int8_t dst_mac_[6] = {0xA0, 0xE7, 0x0B, 0xAE, 0x45, 0x1B};
+    u_int8_t src_mac_[6] = {0xA0, 0xE7, 0x0B, 0xAE, 0x45, 0x1B};
+    bool if_send_end_ = false;
+    int size_of_packet_ = 0;
+    int packet_has_sent_ = 0;
+    std::queue<ethernet_packet> send_queue_;
+    std::mutex *tex_ = new std::mutex();
+    char error_buffer_[PCAP_ERRBUF_SIZE];
+    int drive_nums_;
+    int drive_selected_;
+
 
 };
-
 
 #endif //ZS_SENDER_DATALINKLAYER_H

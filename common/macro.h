@@ -7,8 +7,8 @@
 
 // Data Link
 #define ETHERNET_TYPE 0x0800 //ipv4
-#define MAX_SIZE 1530
-#define DATA_MAX_SIZE 1300
+#define PACKET_MAX_SIZE 1530
+#define PACKET_DATA_MAX_SIZE 1500
 #define MAC_BYTE_LENGTH 6
 #define QUEUE_MAX_SIZE 100
 #define SLEEP_TIME 100
